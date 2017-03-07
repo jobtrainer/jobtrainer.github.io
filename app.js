@@ -23969,13 +23969,34 @@ var InputGroup = function (ref) {
 	var labelText = ref.labelText;
 	var inputType = ref.inputType;
 	var inputName = ref.inputName;
+	var onChange = ref.onChange;
 
 	return (
 		React.createElement( 'div', { className: "input_group" },
 			React.createElement( 'label', { htmlFor: inputName }, labelText, ":"),
-			React.createElement( 'input', { id: inputName, type: inputType, className: "text_field" })
+			React.createElement( 'input', { id: inputName, type: inputType, className: "text_field", onChange: onChange })
 		)
 	);
+};
+
+__$styleInject(".main_button{font-size:18px;padding:10px 70px;border:none;border-radius:20px;color:#fff;background-color:#21abc7;cursor:pointer;transition:background-color .3s}.main_button:hover{background-color:#1c91a8}.main_button:focus{outline:none;box-shadow:0 0 4px 4px #fff}.main_button.disabled{background-color:rgba(129,187,210,.8);cursor:default}",undefined);
+
+var MainButton = function (ref) {
+	var isSubmit = ref.isSubmit;
+	var buttonText = ref.buttonText;
+	var isDisabled = ref.isDisabled;
+
+	var type = isSubmit ? 'submit' : 'button';
+	var buttonClass = "main_button" + (isDisabled ? ' disabled' : '');
+	return (
+		React.createElement( 'button', { type: type, className: buttonClass, disabled: isDisabled }, buttonText)
+	);
+};
+
+MainButton.propTypes = {
+	isSubmit: React$1.PropTypes.bool,
+	buttonText: React$1.PropTypes.string,
+	isDisabled: React$1.PropTypes.bool,
 };
 
 __$styleInject(".login_page{height:100%;position:fixed;width:100%;background-image:url(/resources/images/desk.jpg)}.login_page .login_container{margin:50px auto;max-width:100%;width:750px;height:300px;background-color:hsla(0,0%,100%,.8);border-radius:5px;box-shadow:0 1px 5px 1px #696969;padding:15px;text-align:center}.login_page .login_container .title{color:#666e77}.login_page .login_container .input_group{margin:30px 0}",undefined);
@@ -23989,15 +24010,30 @@ var Login = (function (superclass) {
 	Login.prototype = Object.create( superclass && superclass.prototype );
 	Login.prototype.constructor = Login;
 
+	Login.prototype.handleUsernameChange = function handleUsernameChange (e) {
+		this.setState({username: e.target.value});
+	};
+
+	Login.prototype.handlePasswordChange = function handlePasswordChange (e) {
+		this.setState({password: e.target.value});
+	};
+	
+	Login.prototype.handleLoginSubmit = function handleLoginSubmit (e) {
+		e.preventDefault();
+		console.log('you tried to login!');
+		console.log('username: ' + this.state.username);
+		console.log('password: ' + this.state.password);
+	};
+	
 	Login.prototype.render = function render () {
 		return (
 			React$1__default.createElement( 'div', { className: "login_page" },
 				React$1__default.createElement( 'div', { className: "login_container" },
 					React$1__default.createElement( 'h1', { className: "title" }, "Login"),
-					React$1__default.createElement( 'form', { onSubmit: function (e) { e.preventDefault(); } },
-						React$1__default.createElement( InputGroup, { labelText: "Username", inputName: "username", inputType: "text" }),
-						React$1__default.createElement( InputGroup, { labelText: "Password", inputName: "password", inputType: "password" }), 						
-						React$1__default.createElement( 'button', { type: "submit" }, "Submit")
+					React$1__default.createElement( 'form', { onSubmit: this.handleLoginSubmit.bind(this) },
+						React$1__default.createElement( InputGroup, { labelText: "Username", inputName: "username", inputType: "text", onChange: this.handleUsernameChange.bind(this) }),
+						React$1__default.createElement( InputGroup, { labelText: "Password", inputName: "password", inputType: "password", onChange: this.handlePasswordChange.bind(this) }), 						
+						React$1__default.createElement( MainButton, { buttonText: "Login", isSubmit: true, isDisabled: false })
 					)
 				)
 			)
@@ -24007,7 +24043,7 @@ var Login = (function (superclass) {
 	return Login;
 }(React$1__default.Component));
 
-__$styleInject(".main_page_container h1{color:#666e77}",undefined);
+__$styleInject(".main_page_container h1{color:#666e77}.main_page_container .course_container{width:300px;height:350px;margin:10px;padding:10px;display:inline-block;box-shadow:0 0 3px 1px rgba(0,0,0,.3);text-align:center}.main_page_container .course_container .course_image{height:150px;filter:grayscale(100%)}.main_page_container .course_container .course_title{font-size:1.5em}.main_page_container .course_container:hover{box-shadow:0 0 3px 1px rgba(0,0,0,.1);background:#fff;cursor:pointer}.main_page_container .course_container:hover .course_image{filter:none}",undefined);
 
 var MainPage = (function (superclass) {
     function MainPage () {
@@ -24018,26 +24054,32 @@ var MainPage = (function (superclass) {
     MainPage.prototype = Object.create( superclass && superclass.prototype );
     MainPage.prototype.constructor = MainPage;
 
-    MainPage.prototype.renderSingleTutorial = function renderSingleTutorial (index, header, text) {
+    MainPage.prototype.renderSingleCourse = function renderSingleCourse (ref) {
+        var id = ref.id;
+        var title = ref.title;
+        var description = ref.description;
+        var imageUrl = ref.imageUrl;
+
         return (
-            React$1__default.createElement( 'div', { key: index },
-                React$1__default.createElement( 'h5', null, index + 1, ". ", header ),
-                React$1__default.createElement( 'span', null, text )
+            React$1__default.createElement( 'div', { key: id, id: id, className: "course_container", key: id },
+                React$1__default.createElement( 'img', { className: "course_image", src: imageUrl }),
+                React$1__default.createElement( 'h5', { className: "course_title" }, title),
+                React$1__default.createElement( 'span', { className: "course_description" }, description)
             )
         )
     };
 
-
     MainPage.prototype.render = function render () {
         var this$1 = this;
 
-        var tutorialElements = this.props.tutorials.map(function (curr, index) { return this$1.renderSingleTutorial(index, curr.header, curr.text); });
+        var coursesElements = this.props.courses.map(function (curr) { return this$1.renderSingleCourse(curr); });
         return (
             React$1__default.createElement( 'div', { className: "page main_page_container" },
                 React$1__default.createElement( 'h1', null, "JobTrainer" ),
                 React$1__default.createElement( 'span', null, "Trainer for new jobs" ),
-                React$1__default.createElement( 'h3', null, "Tutorials" ),
-                tutorialElements
+                React$1__default.createElement( 'hr', null ),
+                React$1__default.createElement( 'h3', null, "Courses" ),
+                coursesElements
             )
         )
     };
@@ -24047,7 +24089,7 @@ var MainPage = (function (superclass) {
 
 function mapStateToProps(state) {
     return {
-        tutorials: state.get("tutorials")
+        courses: state.get("courses")
     };
 }
 
@@ -24105,12 +24147,26 @@ function createAppStore() {
 
 var store = createAppStore();
 
-store.dispatch(setValueAction("tutorials", [
-    {
-        header: "New tutoral",
-        text: "Job training tutorial text example"
-    }
-]));
+store.dispatch(setValueAction("courses", [
+        {
+            id: "frontend",
+            title: "FrondEnd",
+            description: "Front end courses",
+            imageUrl: "http://cdn.geekwire.com/wp-content/uploads/2015/06/code-fellows-shield1-265x300.png",
+        },
+        {
+            id: "backend",
+            title: "BackEnd",
+            description: "Back end courses",
+            imageUrl: "https://static1.squarespace.com/static/55e561fce4b0524376a841d3/t/56695b077086d7721f2803eb/1486577990855/Back+end+development+icon"
+        },
+        {
+            id: "qa",
+            title: "QA",
+            description: "QA courses",
+            imageUrl: "http://sgbmithaiwala.com/onewebstatic/9d2d18004d-QA-ICON-small.png"
+        }   
+    ]));
  
 index.render(
     React$1__default.createElement( Provider, { store: store },
