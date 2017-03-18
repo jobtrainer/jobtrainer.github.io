@@ -22418,12 +22418,10 @@ var _warning2 = _interopRequireDefault(_warning);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var addQueryStringValueToPath = exports.addQueryStringValueToPath = function addQueryStringValueToPath(path, key, value) {
-  var _parsePath = parsePath(path);
-
-  var pathname = _parsePath.pathname;
-  var search = _parsePath.search;
-  var hash = _parsePath.hash;
-
+  var _parsePath = parsePath(path),
+      pathname = _parsePath.pathname,
+      search = _parsePath.search,
+      hash = _parsePath.hash;
 
   return createPath({
     pathname: pathname,
@@ -22433,12 +22431,10 @@ var addQueryStringValueToPath = exports.addQueryStringValueToPath = function add
 };
 
 var stripQueryStringValueFromPath = exports.stripQueryStringValueFromPath = function stripQueryStringValueFromPath(path, key) {
-  var _parsePath2 = parsePath(path);
-
-  var pathname = _parsePath2.pathname;
-  var search = _parsePath2.search;
-  var hash = _parsePath2.hash;
-
+  var _parsePath2 = parsePath(path),
+      pathname = _parsePath2.pathname,
+      search = _parsePath2.search,
+      hash = _parsePath2.hash;
 
   return createPath({
     pathname: pathname,
@@ -22450,9 +22446,8 @@ var stripQueryStringValueFromPath = exports.stripQueryStringValueFromPath = func
 };
 
 var getQueryStringValueFromPath = exports.getQueryStringValueFromPath = function getQueryStringValueFromPath(path, key) {
-  var _parsePath3 = parsePath(path);
-
-  var search = _parsePath3.search;
+  var _parsePath3 = parsePath(path),
+      search = _parsePath3.search;
 
   var match = search.match(new RegExp('[?&]' + key + '=([a-zA-Z0-9]+)'));
   return match && match[1];
@@ -22494,10 +22489,10 @@ var parsePath = exports.parsePath = function parsePath(path) {
 var createPath = exports.createPath = function createPath(location) {
   if (location == null || typeof location === 'string') return location;
 
-  var basename = location.basename;
-  var pathname = location.pathname;
-  var search = location.search;
-  var hash = location.hash;
+  var basename = location.basename,
+      pathname = location.pathname,
+      search = location.search,
+      hash = location.hash;
 
   var path = (basename || '') + pathname;
 
@@ -22515,7 +22510,7 @@ var LocationUtils = createCommonjsModule(function (module, exports) {
 exports.__esModule = true;
 exports.locationsAreEqual = exports.statesAreEqual = exports.createLocation = exports.createQuery = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -22538,9 +22533,9 @@ var createQuery = exports.createQuery = function createQuery(props) {
 };
 
 var createLocation = exports.createLocation = function createLocation() {
-  var input = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
-  var action = arguments.length <= 1 || arguments[1] === undefined ? _Actions.POP : arguments[1];
-  var key = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+  var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/';
+  var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _Actions.POP;
+  var key = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
   var object = typeof input === 'string' ? (0, _PathUtils.parsePath)(input) : input;
 
@@ -22635,11 +22630,11 @@ var defaultParseQueryString = _queryString.parse;
  */
 var useQueries = function useQueries(createHistory) {
   return function () {
-    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     var history = createHistory(options);
-    var stringifyQuery = options.stringifyQuery;
-    var parseQueryString = options.parseQueryString;
+    var stringifyQuery = options.stringifyQuery,
+        parseQueryString = options.parseQueryString;
 
 
     if (typeof stringifyQuery !== 'function') stringifyQuery = defaultStringifyQuery;
@@ -22747,7 +22742,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var useBasename = function useBasename(createHistory) {
   return function () {
-    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     var history = createHistory(options);
     var basename = options.basename;
@@ -22757,7 +22752,7 @@ var useBasename = function useBasename(createHistory) {
       if (!location) return location;
 
       if (basename && location.basename == null) {
-        if (location.pathname.indexOf(basename) === 0) {
+        if (location.pathname.toLowerCase().indexOf(basename.toLowerCase()) === 0) {
           location.pathname = location.pathname.substring(basename.length);
           location.basename = basename;
 
@@ -22923,13 +22918,13 @@ var _LocationUtils = LocationUtils;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var createHistory = function createHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-  var getCurrentLocation = options.getCurrentLocation;
-  var getUserConfirmation = options.getUserConfirmation;
-  var pushLocation = options.pushLocation;
-  var replaceLocation = options.replaceLocation;
-  var go = options.go;
-  var keyLength = options.keyLength;
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var getCurrentLocation = options.getCurrentLocation,
+      getUserConfirmation = options.getUserConfirmation,
+      pushLocation = options.pushLocation,
+      replaceLocation = options.replaceLocation,
+      go = options.go,
+      keyLength = options.keyLength;
 
 
   var currentLocation = void 0;
@@ -23058,7 +23053,7 @@ var createHistory = function createHistory() {
   };
 
   var createLocation = function createLocation(location, action) {
-    var key = arguments.length <= 2 || arguments[2] === undefined ? createKey() : arguments[2];
+    var key = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : createKey();
     return (0, _LocationUtils.createLocation)(location, action, key);
   };
 
@@ -23119,7 +23114,7 @@ var createStateStorage = function createStateStorage(entries) {
 };
 
 var createMemoryHistory = function createMemoryHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   if (Array.isArray(options)) {
     options = { entries: options };
@@ -23186,9 +23181,9 @@ var createMemoryHistory = function createMemoryHistory() {
     go: go
   }));
 
-  var _options = options;
-  var entries = _options.entries;
-  var current = _options.current;
+  var _options = options,
+      entries = _options.entries,
+      current = _options.current;
 
 
   if (typeof entries === 'string') {
@@ -23279,6 +23274,15 @@ var supportsGoWithoutReloadUsingHash = exports.supportsGoWithoutReloadUsingHash 
  */
 var supportsPopstateOnHashchange = exports.supportsPopstateOnHashchange = function supportsPopstateOnHashchange() {
   return window.navigator.userAgent.indexOf('Trident') === -1;
+};
+
+/**
+ * Returns true if a given popstate event is an extraneous WebKit event.
+ * Accounts for the fact that Chrome on iOS fires real popstate events
+ * containing undefined state when pressing the back button.
+ */
+var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
+  return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
 };
 });
 
@@ -23421,8 +23425,9 @@ var getUserConfirmation = exports.getUserConfirmation = function getUserConfirma
 
 var startListener = exports.startListener = function startListener(listener) {
   var handlePopState = function handlePopState(event) {
-    if (event.state !== undefined) // Ignore extraneous popstate events in WebKit
-      listener(_createLocation(event.state));
+    if ((0, _DOMUtils.isExtraneousPopstateEvent)(event)) // Ignore extraneous popstate events in WebKit
+      return;
+    listener(_createLocation(event.state));
   };
 
   (0, _DOMUtils.addEventListener)(window, PopStateEvent, handlePopState);
@@ -23445,8 +23450,8 @@ var startListener = exports.startListener = function startListener(listener) {
 };
 
 var updateLocation = function updateLocation(location, updateState) {
-  var state = location.state;
-  var key = location.key;
+  var state = location.state,
+      key = location.key;
 
 
   if (state !== undefined) (0, _DOMStateStorage.saveState)(key, state);
@@ -23553,18 +23558,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * behavior using { forceRefresh: true } in options.
  */
 var createBrowserHistory = function createBrowserHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   !_ExecutionEnvironment.canUseDOM ? (0, _invariant2.default)(false, 'Browser history needs a DOM') : void 0;
 
   var useRefresh = options.forceRefresh || !(0, _DOMUtils.supportsHistory)();
   var Protocol = useRefresh ? RefreshProtocol$$1 : BrowserProtocol$$1;
 
-  var getUserConfirmation = Protocol.getUserConfirmation;
-  var getCurrentLocation = Protocol.getCurrentLocation;
-  var pushLocation = Protocol.pushLocation;
-  var replaceLocation = Protocol.replaceLocation;
-  var go = Protocol.go;
+  var getUserConfirmation = Protocol.getUserConfirmation,
+      getCurrentLocation = Protocol.getCurrentLocation,
+      pushLocation = Protocol.pushLocation,
+      replaceLocation = Protocol.replaceLocation,
+      go = Protocol.go;
 
 
   var history = (0, _createHistory2.default)(_extends({
@@ -23725,8 +23730,8 @@ var startListener = exports.startListener = function startListener(listener, pat
 };
 
 var updateLocation = function updateLocation(location, pathCoder, queryKey, updateHash) {
-  var state = location.state;
-  var key = location.key;
+  var state = location.state,
+      key = location.key;
 
 
   var path = pathCoder.encodePath((0, _PathUtils.createPath)(location));
@@ -23817,12 +23822,12 @@ var HashPathCoders = {
 };
 
 var createHashHistory = function createHashHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   !_ExecutionEnvironment.canUseDOM ? (0, _invariant2.default)(false, 'Hash history needs a DOM') : void 0;
 
-  var queryKey = options.queryKey;
-  var hashType = options.hashType;
+  var queryKey = options.queryKey,
+      hashType = options.hashType;
 
 
   (0, _warning2.default)(queryKey !== false, 'Using { queryKey: false } no longer works. Instead, just don\'t ' + 'use location state if you don\'t want a key in your URL query string');
@@ -23924,11 +23929,11 @@ var NavigationLink = function (ref) {
 	var itemClassName = "navigation_item" + (className ? ' ' + className : '');
 
 	return (
-		React.createElement( 'div', { className: itemClassName }, React.createElement( Link, { to: to }, linkText))
+		React.createElement( Link, { to: to }, React.createElement( 'div', { className: itemClassName }, linkText))
 	);
 };
 
-__$styleInject("body{margin:0;padding:0;overflow:hidden;@import url(\"https://fonts.googleapis.com/css?family=Roboto\");font-family:Roboto,sans-serif}.application .header{position:relative;width:100%;height:50px;padding:10px;z-index:1;display:flex;background-color:#fff;box-shadow:0 5px 11px 4px rgba(0,0,0,.03)}.application .header .logo{height:100%;display:flex;align-items:center}.application .header .logo .logo_image{max-width:100%;max-height:100%}.application .header .logo .company_name{display:inline-block;margin:0 15px}.application .header .navigation{display:flex;align-items:center}.application .header .navigation .login_navigation{position:absolute;right:30px}.application .content{position:fixed;height:100%;width:100%}.application .content .page{padding:20px;background-color:#f9f9f9;height:100%;width:100%}",undefined);
+__$styleInject("h1{color:#666e77}hr{margin-right:40px}.container{margin:20px}body{margin:0;padding:0;@import url(\"https://fonts.googleapis.com/css?family=Roboto\");font-family:Roboto,sans-serif}.application .header{position:relative;width:100%;height:50px;padding:10px;z-index:1;display:flex;background-color:#fff;box-shadow:0 5px 11px 4px rgba(0,0,0,.03)}.application .header .logo{height:100%;display:flex;align-items:center}.application .header .logo .logo_image{max-width:100%;max-height:100%}.application .header .logo .company_name{display:inline-block;margin:0 15px}.application .header .navigation .login_navigation{position:absolute;right:30px}.application .content{display:inline}.application .content .page{padding:20px;background-color:#fdfdfd;height:100%;width:100%}",undefined);
 
 var App = (function (superclass) {
 	function App () {
@@ -23949,13 +23954,14 @@ var App = (function (superclass) {
 					),
 					React$1__default.createElement( 'div', { className: "navigation" },
 						React$1__default.createElement( NavigationLink, { to: "/", linkText: "Main" }),
+						React$1__default.createElement( NavigationLink, { to: "/courses", linkText: "Courses" }),
+						React$1__default.createElement( NavigationLink, { to: "/:domain", linkText: "Domain" }),
 						React$1__default.createElement( NavigationLink, { to: "/login", linkText: "Login", className: "login_navigation" })
 					)
 				),
 				React$1__default.createElement( 'div', { className: "content" },
 					this.props.children
-				),
-				React$1__default.createElement( 'div', { className: "footer" }, "This is the footer")
+				)
 			)
 		)
 	};
@@ -24020,9 +24026,6 @@ var Login = (function (superclass) {
 	
 	Login.prototype.handleLoginSubmit = function handleLoginSubmit (e) {
 		e.preventDefault();
-		console.log('you tried to login!');
-		console.log('username: ' + this.state.username);
-		console.log('password: ' + this.state.password);
 	};
 	
 	Login.prototype.render = function render () {
@@ -24043,7 +24046,42 @@ var Login = (function (superclass) {
 	return Login;
 }(React$1__default.Component));
 
-__$styleInject(".main_page_container h1{color:#666e77}.main_page_container .course_container{width:300px;height:350px;margin:10px;padding:10px;display:inline-block;box-shadow:0 0 3px 1px rgba(0,0,0,.3);text-align:center}.main_page_container .course_container .course_image{height:150px;filter:grayscale(100%)}.main_page_container .course_container .course_title{font-size:1.5em}.main_page_container .course_container:hover{box-shadow:0 0 3px 1px rgba(0,0,0,.1);background:#fff;cursor:pointer}.main_page_container .course_container:hover .course_image{filter:none}",undefined);
+__$styleInject("",undefined);
+
+__$styleInject(".card_container{width:300px;height:350px;margin:10px;padding:10px;display:inline-block;box-shadow:1px 2px 2px 1px rgba(0,0,0,.3);text-align:center;background:#fff}",undefined);
+
+function Card(ref) {
+    var className = ref.className; if ( className === void 0 ) className = '';
+    var children = ref.children;
+
+    return (
+        React.createElement( 'div', { className: ("card_container " + className) }, children)
+    );
+}
+
+__$styleInject(".entity_card_container{padding:0;color:#000}.entity_card_container .entity_display_container{height:200px;background:#464c53;transition:background .1s ease-in-out;color:#fff;line-height:200px;font-size:50px}.entity_card_container .entity_image{height:150px}.entity_card_container .entity_details{padding:10px}.entity_card_container .entity_details .entity_title{font-size:32px;margin-top:10px}.entity_card_container .entity_details .entity_description{text-align:left}.entity_card_container:hover{box-shadow:0 0 2px 1px rgba(0,0,0,.3);cursor:pointer}.entity_card_container:hover .entity_display_container{background:#2f4054}",undefined);
+
+function EntityCard(ref) {
+    var id = ref.id;
+    var title = ref.title;
+    var description = ref.description;
+    var status = ref.status;
+    var children = ref.children;
+
+    var entityHeaderText = title ? title.split('').filter(function (curr) { return curr.match(/[A-Z]/); }).join('') : title;
+    return (
+        React$1__default.createElement( Card, { className: "entity_card_container" },
+            React$1__default.createElement( 'div', { className: "entity_display_container" },
+                React$1__default.createElement( 'span', { className: "entity_display_title" }, entityHeaderText)
+            ),
+            React$1__default.createElement( 'div', { className: "entity_details" },
+                React$1__default.createElement( 'h5', { className: "entity_title" }, title),
+                React$1__default.createElement( 'div', { className: "entity_description" }, description),
+                React$1__default.createElement( 'div', { className: "entity_children" }, children)
+            )
+        )
+    );
+}
 
 var MainPage = (function (superclass) {
     function MainPage () {
@@ -24054,32 +24092,27 @@ var MainPage = (function (superclass) {
     MainPage.prototype = Object.create( superclass && superclass.prototype );
     MainPage.prototype.constructor = MainPage;
 
-    MainPage.prototype.renderSingleCourse = function renderSingleCourse (ref) {
-        var id = ref.id;
-        var title = ref.title;
-        var description = ref.description;
-        var imageUrl = ref.imageUrl;
-
-        return (
-            React$1__default.createElement( 'div', { key: id, id: id, className: "course_container", key: id },
-                React$1__default.createElement( 'img', { className: "course_image", src: imageUrl }),
-                React$1__default.createElement( 'h5', { className: "course_title" }, title),
-                React$1__default.createElement( 'span', { className: "course_description" }, description)
-            )
-        )
-    };
-
     MainPage.prototype.render = function render () {
-        var this$1 = this;
+        var scopeElements = this.props.courses.map(function (ref) {
+                var id = ref.id;
+                var title = ref.title;
+                var description = ref.description;
+                var imageUrl = ref.imageUrl;
 
-        var coursesElements = this.props.courses.map(function (curr) { return this$1.renderSingleCourse(curr); });
+                return React$1__default.createElement( Link, { key: id, to: ("/" + id) },  
+                React$1__default.createElement( EntityCard, { id: id, title: title, description: description, imageUrl: imageUrl })
+            );
+        }
+        );
         return (
-            React$1__default.createElement( 'div', { className: "page main_page_container" },
+            React$1__default.createElement( 'div', { className: "page page_container" },
                 React$1__default.createElement( 'h1', null, "JobTrainer" ),
                 React$1__default.createElement( 'span', null, "Trainer for new jobs" ),
                 React$1__default.createElement( 'hr', null ),
-                React$1__default.createElement( 'h3', null, "Courses" ),
-                coursesElements
+                React$1__default.createElement( 'h3', null, "Scopes" ),
+                React$1__default.createElement( 'div', { className: "container scopes_container" },
+                    scopeElements
+                )
             )
         )
     };
@@ -24089,7 +24122,7 @@ var MainPage = (function (superclass) {
 
 function mapStateToProps(state) {
     return {
-        courses: state.get("courses")
+        courses: state.get("scopes")
     };
 }
 
@@ -24099,6 +24132,136 @@ function mapDispatchToProps(dispatch) {
 }
 
 var MainPage$1 = connect(mapStateToProps, mapDispatchToProps)(MainPage);
+
+var COURSE_STATUS_PENDING = 'pending';
+var COURSE_STATUS_IN_PROGRESS = 'in-progress';
+var COURSE_STATUS_COMPLETE = 'complete';
+
+var COURSE_STATUSES = [
+	COURSE_STATUS_PENDING,
+	COURSE_STATUS_IN_PROGRESS,
+	COURSE_STATUS_COMPLETE ];
+
+__$styleInject(".course{display:flex}.course .course_title{line-height:30px;margin:0 5px}.course .course_status{width:30px;height:30px;display:inline-block}",undefined);
+
+var MAP_STATUS_TO_IMAGE = {
+	'pending': 'https://d30y9cdsu7xlg0.cloudfront.net/png/99629-200.png',
+	'in-progress': 'https://d30y9cdsu7xlg0.cloudfront.net/png/99629-200.png',
+	'complete': 'https://image.flaticon.com/icons/png/128/148/148767.png'
+};
+
+var StatusIcon = function (ref) {
+	var status = ref.status;
+	var className = ref.className; if ( className === void 0 ) className = '';
+
+	var statusImage = MAP_STATUS_TO_IMAGE[status];
+
+	return (
+		React.createElement( 'img', { className: className, src: statusImage })
+	);
+};
+
+StatusIcon.PropTypes = {
+	status: React.PropTypes.string
+};
+
+var CourseGroupCard = function (ref) {
+	var courses = ref.courses;
+
+	var activeCourses = courses.filter(function (course) {
+		return course.status === COURSE_STATUS_IN_PROGRESS;
+	});
+
+	var currentCourse = activeCourses.length === 0 ? courses[0] : activeCourses[0];
+
+	var leftCourses = courses.filter(function (course) {
+		return currentCourse.id !== course.id;
+	});
+
+	var coursesContent = leftCourses.map(function (course) {
+		return (
+			React.createElement( 'div', { className: "course" },
+				React.createElement( StatusIcon, { status: course.status, className: "course_status" }),
+				React.createElement( 'span', { className: "course_title" }, " - ", course.title)
+			));
+	});
+
+	return (
+		React.createElement( Card, { className: "course_group_card" },
+			React.createElement( 'div', { className: "current_course" },
+				React.createElement( 'div', { className: ("course_status course_status_" + (currentCourse.status)) }),
+				React.createElement( 'div', { className: 'course_title' }, currentCourse.title),
+				React.createElement( 'div', { className: 'course_description' }, currentCourse.description)
+			),
+			React.createElement( 'div', { className: "course_group_dependencies" },
+				coursesContent
+			)
+		)
+	);
+};
+// asd sdasd   
+CourseGroupCard.PropTypes = {
+	courses: React.PropTypes.arrayOf(React.PropTypes.shape({
+		id: React.PropTypes.string,
+		title: React.PropTypes.string,
+		description: React.PropTypes.string,
+		status: React.PropTypes.oneOf(COURSE_STATUSES),
+		imageUrl: React.PropTypes.string
+	}))
+};
+
+__$styleInject("",undefined);
+
+function ScopePage(ref) {
+    var scope = ref.scope;
+
+    console.log(scope);
+    var id = scope.id;
+    var title = scope.title;
+    var description = scope.description;
+    var courses = scope.courses;
+    var courseCards = courses && courses.map(function (ref) {
+            var id = ref.id;
+            var title = ref.title;
+            var description = ref.description;
+            var status = ref.status;
+
+            return React$1__default.createElement( EntityCard, { key: id, id: id, title: title, description: description, status: status });
+    }
+    );
+
+    return (
+        React$1__default.createElement( 'div', { className: "page scope_page_container" },
+            React$1__default.createElement( 'h1', null, title ),
+            React$1__default.createElement( 'span', null, description ),
+            React$1__default.createElement( 'hr', null ),
+            React$1__default.createElement( 'h3', null, "Courses" ),
+            React$1__default.createElement( 'div', { className: "container scope_courses_container" },
+                courseCards
+            )
+        )
+    )
+}
+
+
+function mapStateToProps$1(state) {
+    return {
+        scopes: state.get("scopes")
+    };
+}
+
+function mapDispatchToProps$1(dispatch) {
+    return {
+    }
+}
+
+function mergeProps(state, dispatch, props) {
+    return {
+        scope: state.scopes.find(function (currScope) { return currScope.id == props.params.scopeId; })
+    }
+}
+
+var ScopePage$1 = connect(mapStateToProps$1, mapDispatchToProps$1, mergeProps)(ScopePage);
 
 var SET_INITIAL_DATA_ACTION = "SET_INITIAL_DATA_ACTION";
 var SET_VALUE_ACTION = "SET_VALUE_ACTION";
@@ -24147,32 +24310,52 @@ function createAppStore() {
 
 var store = createAppStore();
 
-store.dispatch(setValueAction("courses", [
+store.dispatch(setValueAction("scopes", [
         {
             id: "frontend",
             title: "FrondEnd",
-            description: "Front end courses",
+            description: "Learn all the Front end courses Learn all the Front end courses",
             imageUrl: "http://cdn.geekwire.com/wp-content/uploads/2015/06/code-fellows-shield1-265x300.png",
+            courses: [
+                {
+                    id: "react",
+                    title: "React",
+                    description: "This course teaches react, a ui library from Facebook",
+                    status: "pending",
+                },
+                {
+                    id: "angular",
+                    title: "Angular",
+                    description: "This course teaches angular, a ui library from Google",
+                    status: "pending",
+                },
+                {
+                    id: "vue",
+                    title: "Vue",
+                    description: "This course teaches vue, a ui library",
+                    status: "pending",
+                }
+            ]
         },
         {
             id: "backend",
             title: "BackEnd",
-            description: "Back end courses",
+            description: "Learn all the Back end courses Learn all the Back end courses",
             imageUrl: "https://static1.squarespace.com/static/55e561fce4b0524376a841d3/t/56695b077086d7721f2803eb/1486577990855/Back+end+development+icon"
         },
         {
             id: "qa",
             title: "QA",
-            description: "QA courses",
+            description: "Learn all the QA courses Learn all the QA courses",
             imageUrl: "http://sgbmithaiwala.com/onewebstatic/9d2d18004d-QA-ICON-small.png"
-        }   
-    ]));
+        } ]));
  
 index.render(
     React$1__default.createElement( Provider, { store: store },
         React$1__default.createElement( Router, { history: browserHistory },
             React$1__default.createElement( Route, { path: "/", component: App },
                 React$1__default.createElement( IndexRoute, { component: MainPage$1 }),
+                React$1__default.createElement( Route, { path: "/:scopeId", component: ScopePage$1 }),
                 React$1__default.createElement( Route, { path: "login", component: Login })
             )
         )
